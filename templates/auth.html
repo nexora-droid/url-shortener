@@ -32,7 +32,7 @@
             <ol class="list-inside list-disc overflow-clip mt-2">
                 <li class="unsatisfied" id="uReq1">Be at least 8 characters</li>
                 <li class="unsatisfied" id="uReq2">Not include any of the following symbols: & * , ! @ # $ % ^ ( )</li>
-                <li class="unsatisfied" id="uReq3">Does not include parts of your name, address, email or other sensitive info.</li>
+                <li class="unsatisfied" id="uReq3">Does not include parts of your name, address, or other sensitive info.</li>
             </ol>
             <br>
             <label for="pwd">Password</label>
@@ -41,18 +41,57 @@
                 <li class="unsatisfied">Be at least 8 characters</li>
                 <li class="unsatisfied">Have at least 1 uppercase and 1 lowercase letter</li>
                 <li class="unsatisfied">Have at least 1 symbol</li>
-                <li class="unsatisfied">Shoukd not include parts of your name, address, email or other sensitive info</li>
+                <li class="unsatisfied">Shoukd not include parts of your name, address, or other sensitive info</li>
             </ol>
         </form>
     </div>
     <script>
         const username = document.getElementById("user");
         const realName = document.getElementById("realName");
-        const usernameVal = username.value;
-        const nameVal = realName.val;
-        if (!usernameVal.includes(nameVal)){
-            
+        const uReq1 = document.getElementById("uReq1");
+        const uReq2 = document.getElementById("uReq2");
+        const uReq3 = document.getElementById("uReq3");
+        username.addEventListener("input", ()=>{
+            checkUsername()
+        })
+        realName.addEventListener("input", ()=>{
+            checkUsername()
+        })
+        function checkUsername(){
+            const usernameVal = username.value.toLowerCase();
+            const nameVal = realName.value.toLowerCase();
+            const nameWords = nameVal.split(/\s+/);
+            const hasNameWord = nameWords.some(word => usernameVal.includes(word));
+            if (nameVal && usernameVal){
+                if (!hasNameWord){
+                    uReq3.classList.remove("unsatisfied");
+                    uReq3.classList.add("satisfied");
+                }
+                else {
+                    uReq3.classList.add("unsatisfied");
+                    uReq3.classList.remove("satisfied");
+                }
+                const symbols = ["&", "*", "!", "@", "#", "%", "^", "(", ")"];
+                if (symbols.some(sym => usernameVal.includes(sym))) {
+                    uReq2.classList.add("unsatisfied");
+                    uReq2.classList.remove("satisfied"); 
+                }
+                else {
+                    uReq2.classList.remove("unsatisfied");
+                    uReq2.classList.add("satisfied");
+                }
+                const usernameLen = usernameVal.length;
+                if (usernameLen >= 8) {
+                    uReq1.classList.add("satisfied");
+                    uReq1.classList.remove("unsatisfied");
+                }
+                else {
+                    uReq1.classList.remove("satisfied");
+                    uReq1.classList.add("unsatisfied");
+                }
+            }
         }
+        
     </script>
 </body>
 </html>
