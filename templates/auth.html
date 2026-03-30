@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Authentication || Egg Labs</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/output.css')}}">
+</head>
+<body class="p-5">
+    <div class="flex flex-row justify-between"> <!--NAVBAR-->
+        <div>
+            <h1 class="text-3xl font-sys font-bold">Egg Labs</h1>
+        </div>
+        <div class="flex flex-row gap-5 font-bold ">
+            <a class="text-2xl underline decoration-wavy underline-offset-2 hover:underline-offset-4 ease-in-out duration-400 hover:text-3xl" href="wwww.youtube.com">About Us</a>
+            <a class="text-2xl underline decoration-wavy underline-offset-2 hover:underline-offset-4 ease-in-out duration-400 hover:text-3xl" href="wwww.youtube.com">Catalogue</a>
+            <a class="text-2xl underline decoration-wavy underline-offset-2 hover:underline-offset-4 ease-in-out duration-400 hover:text-3xl" href="wwww.youtube.com">FAQ</a>
+        </div>
+    </div>
+    <div class="flex flex-col justify-center items-center w-200 h-auto p-5 bg-gray-200 border-4 border-gray-300 rounded-2xl ml-auto mr-auto mt-80">
+        <p class="text-3xl font-bold">Sign up</p>
+        <hr class="mt-5 mb-4 border-2 border-gray-400 w-full">
+        <form class="text-xl flex flex-col w-75">
+            <label for="mail">Email ID</label>
+            <input type="email" name="mail" placeholder="abcde@egg.labs" class="form-in">
+            <br>
+            <label for="name">Name (first and last)</label>
+            <input type="text" name="name" placeholder="Eggy" class="form-in" id="realName">
+            <br>
+            <label for="username">Username</label>
+            <input type="text" name="username" placeholder="egglabs_admin" class="form-in" id="user">
+            <ol class="list-inside list-disc overflow-clip mt-2">
+                <li class="unsatisfied" id="uReq1">Be at least 8 characters</li>
+                <li class="unsatisfied" id="uReq2">Not include any of the following symbols: & * , ! @ # $ % ^ ( )</li>
+                <li class="unsatisfied" id="uReq3">Does not include parts of your name, address, email or other sensitive info.</li>
+            </ol>
+            <br>
+            <label for="pwd">Password</label>
+            <input type="password" name="pwd" placeholder="******" class="form-in">
+            <ol class="list-inside list-disc overflow-clip mt-2">
+                <li class="unsatisfied">Be at least 8 characters</li>
+                <li class="unsatisfied">Have at least 1 uppercase and 1 lowercase letter</li>
+                <li class="unsatisfied">Have at least 1 symbol</li>
+                <li class="unsatisfied">Shoukd not include parts of your name, address, email or other sensitive info</li>
+            </ol>
+        </form>
+    </div>
+    <script>
+        const username = document.getElementById("user");
+        const realName = document.getElementById("realName");
+        const usernameVal = username.value;
+        const nameVal = realName.val;
+        if (!usernameVal.includes(nameVal)){
+            
+        }
+    </script>
+</body>
+</html>

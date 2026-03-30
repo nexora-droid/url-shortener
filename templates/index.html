@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Egg Labs</title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/output.css')}}">
 </head>
 <body class="p-5">
@@ -20,7 +20,17 @@
     <div class="w-full4 flex flex-col justify-center items-center border-red-300 mt-80">
         <div class=" text-center">
             <h1 class="text-6xl font-bold">🐣</h1>
-            <h1 class="text-6xl font-bold">Eggs Lab</h1>
+            <h1 class="text-6xl font-bold">Egg Labs</h1>
         </div>
         <p class="mt-10 text-4xl font-bold text-center">Your basket of free <span class="line-through">tools</span> eggs</p>
+        <div class="font-bold text-white bg-black w-auto h-auto p-5 flex flex-row gap-2 items-center justify-center rounded-2xl mt-10 involve" onclick="authRedirect()">
+            <p class="text-xl">Sign Up</p>
+        </div>
+    </div>
+    <script>
+        function authRedirect(){
+            window.location.href = "{{url_for('auth')}}";
+        }
+    </script>
+</body>
 </html>
