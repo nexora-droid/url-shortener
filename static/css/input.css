@@ -1,0 +1,18 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@layer utilities{
+    .font-sys{
+        font-family: 'Rubik', sans-serif;
+    }
+    .stomp{
+        animation: stomp 0.3s linear;
+    }
+    @keyframes stomp {
+        from{
+            transform: scale(7);
+        }
+        to{
+            transform: scale(1);
+        }
+    }
+}
