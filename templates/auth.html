@@ -6,27 +6,145 @@
     <title>User Authentication || Egg Labs</title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/output.css')}}">
 </head>
-<body class="p-5">
+<body class="p-5 dark:bg-black">
     <div class="flex flex-row justify-between"> <!--NAVBAR-->
         <div>
-            <h1 class="text-3xl font-sys font-bold">Egg Labs</h1>
+            <h1 class="text-3xl font-sys font-bold dark:text-white">Egg Labs</h1>
         </div>
-        <div class="flex flex-row gap-5 font-bold ">
+        <div class="flex flex-row gap-5 font-bold text-black dark:text-white">
             <a class="text-2xl underline decoration-wavy underline-offset-2 hover:underline-offset-4 ease-in-out duration-400 hover:text-3xl" href="wwww.youtube.com">About Us</a>
             <a class="text-2xl underline decoration-wavy underline-offset-2 hover:underline-offset-4 ease-in-out duration-400 hover:text-3xl" href="wwww.youtube.com">Catalogue</a>
             <a class="text-2xl underline decoration-wavy underline-offset-2 hover:underline-offset-4 ease-in-out duration-400 hover:text-3xl" href="wwww.youtube.com">FAQ</a>
         </div>
     </div>
-    <div class="flex flex-col justify-center items-center w-200 h-auto p-5 bg-gray-200 border-4 border-gray-300 rounded-2xl ml-auto mr-auto mt-80">
+    <div class="flex flex-col justify-center items-center w-200 h-auto p-5 dark:bg-black border-4 dark:border-white bg-gray-200 border-gray-300 text-black rounded-2xl ml-auto mr-auto mt-40 dark:text-white">
         <p class="text-3xl font-bold">Sign up</p>
         <hr class="mt-5 mb-4 border-2 border-gray-400 w-full">
-        <form class="text-xl flex flex-col w-75">
+        <form class="text-xl flex flex-col w-75" id="form">
+        </form>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", ()=>{
+            const p1Template = document.getElementById("p1T");
+            const p2Template = document.getElementById("p2T");
+            const btnTemplate = document.getElementById("btnT");
+            const form = document.getElementById("form");
+            const p1 = p1Template.content.cloneNode(true);
+            const btn = btnTemplate.content.cloneNode(true);
+            form.appendChild(p1);
+            form.appendChild(btn);
+            const email = document.getElementById("mail");
+            const name = document.getElementById("name");
+            const emailVal = email.value;
+            const nameVal = name.value;
+            const realBtn = form.querySelector("button");
+            realBtn.addEventListener("click", async (e)=>{
+                e.preventDefault();
+                try {
+                    const response = await fetch("/auth", {
+                        method: "POST",
+                        headers: {"Content-type": "application/json"},
+                        body: JSON.stringify({
+                            "email": email.value,
+                            "name": name.value
+                        })
+                    });
+                    const reply = await response.json();
+                    console.log("reply: ", reply)
+                    loadStep2();
+                } catch (err) {
+                    console.log("Error sending data: ", err);
+                }
+            })
+            function loadStep2() {
+                console.log("123");
+                form.innerHTML = '';
+                const p2 = p2Template.content.cloneNode(true);
+                form.appendChild(p2);
+                const btn2 = btnTemplate.content.cloneNode(true);
+                form.appendChild(btn2);
+                const username = document.getElementById("user");
+                const realName = document.getElementById("realName");
+                const uReq1 = document.getElementById("uReq1");
+                const uReq2 = document.getElementById("uReq2");
+                const uReq3 = document.getElementById("uReq3");
+                username.addEventListener("input", ()=>{
+                    checkUsername()
+                })
+                realName.addEventListener("input", ()=>{
+                    checkUsername()
+                })
+                function checkUsername(){
+                    const usernameVal = username.value.toLowerCase();
+                    const nameVal = realName.value.toLowerCase();
+                    const nameWords = nameVal.split(/\s+/);
+                    const hasNameWord = nameWords.some(word => usernameVal.includes(word));
+                    if (nameVal && usernameVal){
+                        if (!hasNameWord){
+                            uReq3.classList.remove("unsatisfied");
+                            uReq3.classList.add("satisfied");
+                        }
+                        else {
+                            uReq3.classList.add("unsatisfied");
+                            uReq3.classList.remove("satisfied");
+                        }
+                        const symbols = ["&", "*", "!", "@", "#", "%", "^", "(", ")"];
+                        if (symbols.some(sym => usernameVal.includes(sym))) {
+                            uReq2.classList.add("unsatisfied");
+                            uReq2.classList.remove("satisfied"); 
+                        }
+                        else {
+                            uReq2.classList.remove("unsatisfied");
+                            uReq2.classList.add("satisfied");
+                        }
+                        const usernameLen = usernameVal.length;
+                        if (usernameLen >= 8) {
+                            uReq1.classList.add("satisfied");
+                            uReq1.classList.remove("unsatisfied");
+                        }
+                        else {
+                            uReq1.classList.remove("satisfied");
+                            uReq1.classList.add("unsatisfied");
+                        }
+                    }
+                }
+                const realBtn2 = form.querySelector("button");
+                realBtn2.addEventListener("click", async (e)=>{
+                    e.preventDefault();
+                    const email = document.getElementById("mail");
+                    const name = document.getElementById("name");
+                    try {
+                        const response = await fetch("/auth", {
+                            method: "POST",
+                            headers: {"Content-type": "application/json"},
+                            body: JSON.stringify({
+                                "username": username.value,
+                                "name": name.value
+                            })
+                        });
+                        const reply = await response.json();
+                        console.log("reply: ", reply)
+                    } catch (err) {
+                        console.log("Error sending data: ", err);
+                    }
+                })
+            }
+            
+        })
+        
+    </script>
+    <template id="p1T">
+        <div id="part1">
             <label for="mail">Email ID</label>
-            <input type="email" name="mail" placeholder="abcde@egg.labs" class="form-in">
+            <input type="email" name="mail" id="mail" placeholder="abcde@egg.labs" class="form-in">
+            <br>
             <br>
             <label for="name">Name (first and last)</label>
-            <input type="text" name="name" placeholder="Eggy" class="form-in" id="realName">
-            <br>
+            <input type="text" name="name" id="name" placeholder="Eggy" class="form-in" id="realName">
+        </div>
+    </template>
+    <template id="p2T">
+        <div id="part2">
             <label for="username">Username</label>
             <input type="text" name="username" placeholder="egglabs_admin" class="form-in" id="user">
             <ol class="list-inside list-disc overflow-clip mt-2">
@@ -43,55 +161,10 @@
                 <li class="unsatisfied">Have at least 1 symbol</li>
                 <li class="unsatisfied">Shoukd not include parts of your name, address, or other sensitive info</li>
             </ol>
-        </form>
-    </div>
-    <script>
-        const username = document.getElementById("user");
-        const realName = document.getElementById("realName");
-        const uReq1 = document.getElementById("uReq1");
-        const uReq2 = document.getElementById("uReq2");
-        const uReq3 = document.getElementById("uReq3");
-        username.addEventListener("input", ()=>{
-            checkUsername()
-        })
-        realName.addEventListener("input", ()=>{
-            checkUsername()
-        })
-        function checkUsername(){
-            const usernameVal = username.value.toLowerCase();
-            const nameVal = realName.value.toLowerCase();
-            const nameWords = nameVal.split(/\s+/);
-            const hasNameWord = nameWords.some(word => usernameVal.includes(word));
-            if (nameVal && usernameVal){
-                if (!hasNameWord){
-                    uReq3.classList.remove("unsatisfied");
-                    uReq3.classList.add("satisfied");
-                }
-                else {
-                    uReq3.classList.add("unsatisfied");
-                    uReq3.classList.remove("satisfied");
-                }
-                const symbols = ["&", "*", "!", "@", "#", "%", "^", "(", ")"];
-                if (symbols.some(sym => usernameVal.includes(sym))) {
-                    uReq2.classList.add("unsatisfied");
-                    uReq2.classList.remove("satisfied"); 
-                }
-                else {
-                    uReq2.classList.remove("unsatisfied");
-                    uReq2.classList.add("satisfied");
-                }
-                const usernameLen = usernameVal.length;
-                if (usernameLen >= 8) {
-                    uReq1.classList.add("satisfied");
-                    uReq1.classList.remove("unsatisfied");
-                }
-                else {
-                    uReq1.classList.remove("satisfied");
-                    uReq1.classList.add("unsatisfied");
-                }
-            }
-        }
-        
-    </script>
+        </div>
+    </template>
+    <template id="btnT">
+        <button class="bg-white border-gray-500 border-2 p-2.5 mt-4 text-black rounded-2xl" type="submit">Next Step</button>
+    </template>
 </body>
 </html>

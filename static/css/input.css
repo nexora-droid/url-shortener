@@ -30,12 +30,18 @@
         }
     }
     .form-in{
-        @apply border-2 border-gray-400 rounded-xl p-2 focus:outline-gray-600 w-80;
+        @apply border-2 border-gray-400 rounded-xl p-2 focus:outline-gray-600 w-full;
     }
     .unsatisfied{
         @apply text-red-400;
     }
     .satisfied{
-        @apply text-black;
+        @apply dark:text-green-400 text-black;
+    }
+    .hide {
+        @apply opacity-0;
+    }
+    .show {
+        @apply opacity-100;
     }
 }

@@ -2,7 +2,7 @@ import os
 import dotenv
 from dotenv import load_dotenv
 import flask
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
 import firebase_admin
 from firebase_admin import credentials, firestore
 load_dotenv()
@@ -18,10 +18,16 @@ db = firestore.client()
 def home():
     return render_template("index.html")
 
-@app.route("/auth")
-def auth():
+@app.route("/signup")
+def account():
     return render_template("auth.html")
 
+@app.route("/auth", methods=["POST", "GET"])
+def auth():
+    data = request.get_json()
+    print("RECEIEVD DATA:", data)
+    return jsonify({"status": "success", "received": data})
+
 if __name__ == "__main__":
-    #app.run(debug=True, port=6969)
-    app.run(host="0.0.0.0", port=5000)
+    app.run(debug=True, port=6969)
+    #app.run(host="0.0.0.0", port=5000)
