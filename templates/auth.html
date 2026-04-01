@@ -76,7 +76,6 @@
                 })
                 function checkUsername(){
                     const usernameVal = username.value.toLowerCase();
-                    const nameVal = realName.value.toLowerCase();
                     const nameWords = nameVal.split(/\s+/);
                     const hasNameWord = nameWords.some(word => usernameVal.includes(word));
                     if (nameVal && usernameVal){
