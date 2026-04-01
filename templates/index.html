@@ -6,7 +6,7 @@
     <title>Egg Labs</title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/output.css')}}">
 </head>
-<body class="p-5">
+<body class="p-5 dark:bg-black dark:text-white">
     <div class="flex flex-row justify-between"> <!--NAVBAR-->
         <div>
             <h1 class="text-3xl font-sys font-bold">First Free Catalogue of Tools</h1>
@@ -23,7 +23,7 @@
             <h1 class="text-6xl font-bold">Egg Labs</h1>
         </div>
         <p class="mt-10 text-4xl font-bold text-center">Your basket of free <span class="line-through">tools</span> eggs</p>
-        <div class="font-bold text-white bg-black w-auto h-auto p-5 flex flex-row gap-2 items-center justify-center rounded-2xl mt-10 involve" onclick="authRedirect()">
+        <div class="font-bold text-white dark:bg-white dark:text-black bg-black w-auto h-auto p-5 flex flex-row gap-2 items-center justify-center rounded-2xl mt-10 involve" onclick="authRedirect()">
             <p class="text-xl">Sign Up</p>
         </div>
     </div>
